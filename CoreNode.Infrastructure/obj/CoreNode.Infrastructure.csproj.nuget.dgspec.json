@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/CoreNode.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "/Users/anes/Dev/CoreNode/CoreNode.Domain/CoreNode.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/anes/Dev/CoreNode/CoreNode.Domain/CoreNode.Domain.csproj",
+        "projectName": "CoreNode.Domain",
+        "projectPath": "/Users/anes/Dev/CoreNode/CoreNode.Domain/CoreNode.Domain.csproj",
+        "packagesPath": "/Users/anes/.nuget/packages/",
+        "outputPath": "/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/anes/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/CoreNode.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/CoreNode.Infrastructure.csproj",
+        "projectName": "CoreNode.Infrastructure",
+        "projectPath": "/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/CoreNode.Infrastructure.csproj",
+        "packagesPath": "/Users/anes/.nuget/packages/",
+        "outputPath": "/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/anes/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/anes/Dev/CoreNode/CoreNode.Domain/CoreNode.Domain.csproj": {
+                "projectPath": "/Users/anes/Dev/CoreNode/CoreNode.Domain/CoreNode.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

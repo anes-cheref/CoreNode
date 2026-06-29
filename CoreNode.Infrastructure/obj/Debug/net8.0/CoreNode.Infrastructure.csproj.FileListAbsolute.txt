@@ -1,0 +1,15 @@
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/bin/Debug/net8.0/CoreNode.Infrastructure.deps.json
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/bin/Debug/net8.0/CoreNode.Infrastructure.dll
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/bin/Debug/net8.0/CoreNode.Infrastructure.pdb
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/bin/Debug/net8.0/CoreNode.Domain.dll
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/bin/Debug/net8.0/CoreNode.Domain.pdb
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.csproj.AssemblyReference.cache
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.AssemblyInfoInputs.cache
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.AssemblyInfo.cs
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.F66FE909.Up2Date
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.dll
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/refint/CoreNode.Infrastructure.dll
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.pdb
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/ref/CoreNode.Infrastructure.dll

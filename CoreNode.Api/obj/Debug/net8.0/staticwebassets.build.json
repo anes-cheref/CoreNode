@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "mQwKWngoXmf5YvG7+Zzi/bTHFi0QZgs5wvqobihlHp4=",
+  "Source": "CoreNode.Api",
+  "BasePath": "_content/CoreNode.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,11 @@
+/Users/anes/Dev/CoreNode/CoreNode.Domain/bin/Debug/net8.0/CoreNode.Domain.deps.json
+/Users/anes/Dev/CoreNode/CoreNode.Domain/bin/Debug/net8.0/CoreNode.Domain.dll
+/Users/anes/Dev/CoreNode/CoreNode.Domain/bin/Debug/net8.0/CoreNode.Domain.pdb
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/CoreNode.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/CoreNode.Domain.AssemblyInfoInputs.cache
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/CoreNode.Domain.AssemblyInfo.cs
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/CoreNode.Domain.csproj.CoreCompileInputs.cache
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/CoreNode.Domain.dll
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/refint/CoreNode.Domain.dll
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/CoreNode.Domain.pdb
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/ref/CoreNode.Domain.dll
