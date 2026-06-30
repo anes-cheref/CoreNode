@@ -9,3 +9,4 @@
 /Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/refint/CoreNode.Domain.dll
 /Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/CoreNode.Domain.pdb
 /Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/ref/CoreNode.Domain.dll
+/Users/anes/Dev/CoreNode/CoreNode.Domain/obj/Debug/net8.0/CoreNode.Domain.sourcelink.json

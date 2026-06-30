@@ -13,3 +13,4 @@
 /Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/refint/CoreNode.Infrastructure.dll
 /Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.pdb
 /Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/ref/CoreNode.Infrastructure.dll
+/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/obj/Debug/net8.0/CoreNode.Infrastructure.sourcelink.json
