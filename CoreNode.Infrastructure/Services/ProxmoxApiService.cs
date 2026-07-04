@@ -21,8 +21,9 @@ public class ProxmoxApiService : IProxmoxApiService
         
         _httpClient.BaseAddress = new Uri(_options.BaseUrl);
         
-        _httpClient.DefaultRequestHeaders.Add("Authorization", $"PVEAPIToken={_options.TokenId}={_options.Secret}");
-    }
+        _httpClient.DefaultRequestHeaders.TryAddWithoutValidation(
+            "Authorization", 
+            $"PVEAPIToken={_options.TokenId}={_options.Secret}");    }
     
     public async Task<string> GetClusterStatusAsync(CancellationToken cancellationToken = default)
     {
@@ -47,6 +48,7 @@ public class ProxmoxApiService : IProxmoxApiService
     }
     public async Task<string> CreateLxcContainerAsync(CreateLxcRequest request, CancellationToken cancellationToken = default)
     {
+        /*
         var nextVmId = await GetNextVmidAsync(cancellationToken);
         var proxmoxData = new Dictionary<string, string>
         {
@@ -64,5 +66,13 @@ public class ProxmoxApiService : IProxmoxApiService
         response.EnsureSuccessStatusCode();
         
         return await response.Content.ReadAsStringAsync(cancellationToken);
+        */
+        _logger.LogInformation("SIMULATION : Fausse création de la VM {Hostname}", request.Hostname);
+    
+        // On simule le temps de réponse d'un serveur (1 seconde d'attente)
+        await Task.Delay(1000, cancellationToken);
+    
+        // On retourne un faux UPID au format Proxmox
+        return $"UPID:pve:00000000:00000000:{Guid.NewGuid():N}:vzdump:100:root@pam:";
     }
 }

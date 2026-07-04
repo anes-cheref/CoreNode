@@ -6,10 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// --- 1. CONFIGURATION DES SERVICES (Le Container) ---
+
+// NOUVEAU : On déclare les contrôleurs au système
+builder.Services.AddControllers(); 
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<CoreNodeDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -18,8 +22,6 @@ builder.Services.Configure<ProxmoxOptions>(builder.Configuration.GetSection(Prox
 builder.Services.AddHttpClient<IProxmoxApiService, ProxmoxApiService>()
     .ConfigurePrimaryHttpMessageHandler(() =>
     {
-        // ATTENTION : À laisser uniquement si ton Proxmox chez OVH utilise un certificat auto-signé
-        // Sinon, le HttpClient refusera de s'y connecter par sécurité.
         return new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
@@ -28,7 +30,8 @@ builder.Services.AddHttpClient<IProxmoxApiService, ProxmoxApiService>()
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// --- 2. CONFIGURATION DU PIPELINE HTTP (Le flux des requêtes) ---
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -37,6 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// NOUVEAU : On active le routage vers tes contrôleurs
+app.MapControllers(); 
 
 app.Run();
-
