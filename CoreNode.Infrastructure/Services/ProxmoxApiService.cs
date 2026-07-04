@@ -35,8 +35,34 @@ public class ProxmoxApiService : IProxmoxApiService
        return await response.Content.ReadAsStringAsync(cancellationToken);
     }
 
-    public Task<string> CreateLxcContainerAsync(CreateLxcRequest request, CancellationToken cancellationToken = default)
+    private async Task<int> GetNextVmidAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.GetAsync("cluster/next", cancellationToken);
+        response.EnsureSuccessStatusCode();
+        
+        var nextIdString = await response.Content.ReadAsStringAsync(cancellationToken);
+        
+        return int.Parse(nextIdString);
+        
+    }
+    public async Task<string> CreateLxcContainerAsync(CreateLxcRequest request, CancellationToken cancellationToken = default)
+    {
+        var nextVmId = await GetNextVmidAsync(cancellationToken);
+        var proxmoxData = new Dictionary<string, string>
+        {
+            { "vmid",nextVmId.ToString() },
+            { "hostname", request.Hostname },
+            { "ostemplate", request.OsTemplate },
+            { "password", request.Password },
+            { "memory", request.MemoryMB.ToString() },
+            { "cores", request.Cores.ToString() },
+        };
+        var content = new FormUrlEncodedContent(proxmoxData);
+        
+        var response =await  _httpClient.PostAsync("nodes/pve/lxc",content,cancellationToken);
+
+        response.EnsureSuccessStatusCode();
+        
+        return await response.Content.ReadAsStringAsync(cancellationToken);
     }
 }
