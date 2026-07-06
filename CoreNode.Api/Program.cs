@@ -2,6 +2,7 @@ using CoreNode.Domain.Interfaces;
 using CoreNode.Infrastructure.Configuration;
 using CoreNode.Infrastructure.Data;
 using CoreNode.Infrastructure.Services;
+using CoreNode.Infrastructure.Workers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<CoreNodeDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.Configure<ProxmoxOptions>(builder.Configuration.GetSection(ProxmoxOptions.SectionName));
+builder.Services.AddHostedService<ProxmoxTaskWorker>();
 
 builder.Services.AddHttpClient<IProxmoxApiService, ProxmoxApiService>()
     .ConfigurePrimaryHttpMessageHandler(() =>

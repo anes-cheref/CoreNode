@@ -108,3 +108,8 @@
 /Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/anes/Dev/CoreNode/CoreNode.Api/obj/Debug/net8.0/CoreNode.Api.sourcelink.json
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Microsoft.Extensions.Hosting.Abstractions.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Microsoft.Extensions.Options.dll

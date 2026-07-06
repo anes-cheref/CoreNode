@@ -4,6 +4,7 @@ using CoreNode.Domain.Enums;
 using CoreNode.Domain.Interfaces;
 using CoreNode.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TaskStatus = CoreNode.Domain.Enums.TaskStatus;
 
 namespace CoreNode.Api.Controllers;
@@ -26,11 +27,13 @@ public class LxcController : ControllerBase
         [FromBody] CreateLxcRequest lxcRequest, 
         CancellationToken cancellationToken = default)
     {
+        // 1. On récupère le vrai utilisateur (la ligne que tu as créée dans DBeaver)
+        var tenant = await _dbContext.Tenants.FirstAsync(cancellationToken);
         
+        // 2. MAPPING avec le vrai TenantId
         var vm = new VirtualMachine
         {
-            // On simule un utilisateur pour l'instant (sera remplacé par le Token JWT plus tard)
-            TenantId = Guid.NewGuid(), 
+            TenantId = tenant.Id, // <-- Le lien sécurisé avec la clé étrangère est ici
             Hostname = lxcRequest.Hostname,
             MemoryMB = lxcRequest.MemoryMB,
             Status = VmStatus.Creating 
@@ -39,8 +42,10 @@ public class LxcController : ControllerBase
         _dbContext.VirtualMachines.Add(vm);
         await _dbContext.SaveChangesAsync(cancellationToken);
         
+        // 3. Appel à Proxmox (Mocké)
         var upid = await _proxmoxApiService.CreateLxcContainerAsync(lxcRequest, cancellationToken);
         
+        // 4. Suivi de la tâche
         var proxmoxTask = new ProxmoxTask
         {
             Upid = upid,
@@ -52,7 +57,7 @@ public class LxcController : ControllerBase
         _dbContext.Tasks.Add(proxmoxTask);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        // 4. LA RÉPONSE : On retourne un 200 OK avec l'ID de la machine créée pour le front-end
+        // 5. La réponse
         return Ok(new { Message = "Création lancée avec succès", VmId = vm.Id, Upid = upid });
     }
 }
