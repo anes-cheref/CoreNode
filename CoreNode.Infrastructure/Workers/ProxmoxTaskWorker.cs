@@ -1,4 +1,5 @@
 using CoreNode.Domain.Enums;
+using CoreNode.Domain.Interfaces;
 using CoreNode.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore; 
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@ public class ProxmoxTaskWorker : BackgroundService
             using (var scope = _scopeFactory.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<CoreNodeDbContext>();
+                var proxmoxService = scope.ServiceProvider.GetRequiredService<IProxmoxApiService>();
                 
                 // 1. On inclut la machine virtuelle et on exécute la requête en asynchrone
                 var tasksInProgress = await dbContext.Tasks
@@ -35,9 +37,16 @@ public class ProxmoxTaskWorker : BackgroundService
                     foreach (var task in tasksInProgress)
                     {
                         Console.WriteLine($"Vérification de la tâche {task.Id} pour la VM {task.VirtualMachine.Hostname}....");
-                        
-                        task.Status = TaskStatus.Completed;
-                        task.VirtualMachine.Status = VmStatus.Running;
+                        var status = await proxmoxService.GetTaskStatusAsync("pve", task.Upid,stoppingToken);
+
+                        if (status.Equals("stopped"))
+                        {
+                            task.Status = TaskStatus.Completed;
+                            task.VirtualMachine.Status = VmStatus.Running;
+                        }
+                        else
+                            Console.WriteLine("Tâche toujours en cours...");
+                            
                     }
                     
                     

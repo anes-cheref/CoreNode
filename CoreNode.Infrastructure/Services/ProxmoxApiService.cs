@@ -75,4 +75,37 @@ public class ProxmoxApiService : IProxmoxApiService
         // On retourne un faux UPID au format Proxmox
         return $"UPID:pve:00000000:00000000:{Guid.NewGuid():N}:vzdump:100:root@pam:";
     }
+
+    public async Task<string> GetTaskStatusAsync(string node, string upid, CancellationToken cancellationToken = default)
+    {
+        // === LE VRAI CODE (À décommenter quand tu seras chez toi) ===
+        /*
+        var response = await _httpClient.GetAsync($"/api2/json/nodes/{node}/tasks/{upid}/status", cancellationToken);
+        response.EnsureSuccessStatusCode();
+
+        // Proxmox renvoie un JSON sous cette forme : { "data": { "status": "stopped", "exitstatus": "OK" } }
+        var jsonDoc = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync(cancellationToken), cancellationToken: cancellationToken);
+        var status = jsonDoc.RootElement.GetProperty("data").GetProperty("status").GetString();
+
+        return status ?? "unknown";
+        */
+
+
+        // === LE CODE POUR LE BUREAU (Mock) ===
+    
+        // On simule un petit temps de latence réseau d'une seconde
+        await Task.Delay(1000, cancellationToken);
+    
+        // On génère un comportement aléatoire :
+        // 1 fois sur 3, on dit que c'est fini ("stopped"), sinon on dit que ça tourne encore ("running")
+        var random = new Random();
+        bool isFinished = random.Next(0, 3) == 0; 
+    
+        if (isFinished)
+        {
+            return "stopped";
+        }
+    
+        return "running";
+    }
 }
