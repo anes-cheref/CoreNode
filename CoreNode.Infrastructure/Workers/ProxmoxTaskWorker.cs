@@ -1,5 +1,6 @@
-using System.ComponentModel;
+using CoreNode.Domain.Enums;
 using CoreNode.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore; 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TaskStatus = CoreNode.Domain.Enums.TaskStatus;
@@ -23,12 +24,28 @@ public class ProxmoxTaskWorker : BackgroundService
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<CoreNodeDbContext>();
                 
-                var tasksInProgress = dbContext.Tasks.Where(t => t.Status == TaskStatus.InProgress).ToList();
-                
-                Console.WriteLine("J'ai trouvé les tâches in progress. Il y en a : " + tasksInProgress.Count);
+                // 1. On inclut la machine virtuelle et on exécute la requête en asynchrone
+                var tasksInProgress = await dbContext.Tasks
+                    .Include(t => t.VirtualMachine) 
+                    .Where(t => t.Status == TaskStatus.InProgress)
+                    .ToListAsync(stoppingToken);
+
+                if (tasksInProgress.Count > 0)
+                {
+                    foreach (var task in tasksInProgress)
+                    {
+                        Console.WriteLine($"Vérification de la tâche {task.Id} pour la VM {task.VirtualMachine.Hostname}....");
+                        
+                        task.Status = TaskStatus.Completed;
+                        task.VirtualMachine.Status = VmStatus.Running;
+                    }
+                    
+                    
+                    await dbContext.SaveChangesAsync(stoppingToken);
+                    Console.WriteLine($"{tasksInProgress.Count} tâches mises à jour en base !");
+                }
             }
-           
-           await Task.Delay(10000,stoppingToken);
+            await Task.Delay(10000, stoppingToken);
         }
     }
 }
