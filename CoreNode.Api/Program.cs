@@ -4,7 +4,9 @@ using CoreNode.Infrastructure.Data;
 using CoreNode.Infrastructure.Services;
 using CoreNode.Infrastructure.Workers;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // --- 1. CONFIGURATION DES SERVICES (Le Container) ---
@@ -30,6 +32,27 @@ builder.Services.AddHttpClient<IProxmoxApiService, ProxmoxApiService>()
         };
     });
 
+// 1. La clé maître (À terme, on la cachera dans appsettings.json)
+var secretKey = "MaSuperCleSecreteQuiDoitFaireAuMoins32CaracteresPourEtreValide!"; 
+var keyBytes = Encoding.UTF8.GetBytes(secretKey);
+
+// 2. L'embauche de l'agent de sécurité JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false, // On ne vérifie pas qui l'a émis pour l'instant
+            ValidateAudience = false, // On ne vérifie pas pour qui c'est prévu
+            ValidateLifetime = true, // On vérifie que le token n'est pas expiré
+            ValidateIssuerSigningKey = true, // On vérifie la signature cryptographique
+            IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
+        };
+    });
+
+// 3. Activation du système d'autorisation global
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // --- 2. CONFIGURATION DU PIPELINE HTTP (Le flux des requêtes) ---
@@ -42,7 +65,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// NOUVEAU : On active le routage vers tes contrôleurs
+app.UseAuthentication(); // "Qui es-tu ?" (Vérifie le Token)
+app.UseAuthorization();  // "As-tu le droit de faire ça ?" (Vérifie les permissions)
+
+// On active le routage vers les contrôleurs
 app.MapControllers(); 
 
 app.Run();
