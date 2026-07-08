@@ -1,8 +1,10 @@
+using System.Security.Claims;
 using CoreNode.Domain.DTOs;
 using CoreNode.Domain.Entities;
 using CoreNode.Domain.Enums;
 using CoreNode.Domain.Interfaces;
 using CoreNode.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskStatus = CoreNode.Domain.Enums.TaskStatus;
@@ -10,6 +12,7 @@ using TaskStatus = CoreNode.Domain.Enums.TaskStatus;
 namespace CoreNode.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class LxcController : ControllerBase
 {
@@ -28,12 +31,12 @@ public class LxcController : ControllerBase
         CancellationToken cancellationToken = default)
     {
         // 1. On récupère le vrai utilisateur (la ligne que tu as créée dans DBeaver)
-        var tenant = await _dbContext.Tenants.FirstAsync(cancellationToken);
+        var tenantId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         
         // 2. MAPPING avec le vrai TenantId
         var vm = new VirtualMachine
         {
-            TenantId = tenant.Id, // <-- Le lien sécurisé avec la clé étrangère est ici
+            TenantId = tenantId, // <-- Le lien sécurisé avec la clé étrangère est ici
             Hostname = lxcRequest.Hostname,
             MemoryMB = lxcRequest.MemoryMB,
             Status = VmStatus.Creating 
