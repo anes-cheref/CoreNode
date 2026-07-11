@@ -6,5 +6,6 @@ public enum VmStatus
     Creating,
     Running,
     Stopped,
-    Failed
+    Failed,
+    Deleting,
 }

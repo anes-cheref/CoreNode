@@ -4,6 +4,7 @@ using CoreNode.Domain.Entities;
 using CoreNode.Domain.Enums;
 using CoreNode.Domain.Interfaces;
 using CoreNode.Infrastructure.Data;
+using CoreNode.Infrastructure.Workers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -72,6 +73,37 @@ public class LxcController : ControllerBase
         var myMachines = await _dbContext.VirtualMachines.Where(vm => vm.TenantId == tenantId).ToListAsync(cancellationToken);
         
         return Ok(myMachines);
+        
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteLxcAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var tenantId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        var vm = await  _dbContext.VirtualMachines.FirstOrDefaultAsync(v=> v.Id == id,cancellationToken);
+
+        if (vm == null || tenantId != vm.TenantId)
+        {
+            return Forbid();
+        }   
+        else
+        {
+            vm.Status = VmStatus.Deleting;
+            var upid = await _proxmoxApiService.DeleteLxcContainerAsync(vm.Id, cancellationToken);
+
+            var ProxmoxTask = new ProxmoxTask
+            {
+                Upid = upid,
+                VirtualMachineId = vm.Id,
+                Type = TaskType.Deletion,
+                Status = TaskStatus.InProgress
+            };
+            _dbContext.Tasks.Add(ProxmoxTask);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            
+            return Ok(new {Message = "Suppression lancée avec succès", VmId = vm.Id, Upid = upid });
+        }
         
     }
 }

@@ -108,4 +108,13 @@ public class ProxmoxApiService : IProxmoxApiService
     
         return "running";
     }
+
+    public async Task<string> DeleteLxcContainerAsync(Guid vmId, CancellationToken cancellationToken = default)
+    {
+        // Simulation réseau
+        await Task.Delay(500, cancellationToken);
+
+        // On retourne un faux UPID de suppression
+        return $"UPID:pve:000:000:task-delete-{Guid.NewGuid()}";
+    }
 }
