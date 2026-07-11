@@ -63,4 +63,15 @@ public class LxcController : ControllerBase
         // 5. La réponse
         return Ok(new { Message = "Création lancée avec succès", VmId = vm.Id, Upid = upid });
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetMyVirtualMachinesAsync(CancellationToken cancellationToken = default)
+    {
+        var tenantId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        var myMachines = await _dbContext.VirtualMachines.Where(vm => vm.TenantId == tenantId).ToListAsync(cancellationToken);
+        
+        return Ok(myMachines);
+        
+    }
 }
