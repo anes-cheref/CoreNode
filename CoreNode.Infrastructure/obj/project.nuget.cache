@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "NKxF9j4h9go=",
+  "dgSpecHash": "Ma7eOLktrX8=",
   "success": true,
   "projectFilePath": "/Users/anes/Dev/CoreNode/CoreNode.Infrastructure/CoreNode.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -12,8 +12,10 @@
     "/Users/anes/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "/Users/anes/.nuget/packages/microsoft.extensions.caching.memory/8.0.0/microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
     "/Users/anes/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "/Users/anes/.nuget/packages/microsoft.extensions.configuration.binder/8.0.0/microsoft.extensions.configuration.binder.8.0.0.nupkg.sha512",
     "/Users/anes/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "/Users/anes/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "/Users/anes/.nuget/packages/microsoft.extensions.dependencymodel/8.0.2/microsoft.extensions.dependencymodel.8.0.2.nupkg.sha512",
     "/Users/anes/.nuget/packages/microsoft.extensions.diagnostics.abstractions/8.0.1/microsoft.extensions.diagnostics.abstractions.8.0.1.nupkg.sha512",
     "/Users/anes/.nuget/packages/microsoft.extensions.fileproviders.abstractions/8.0.0/microsoft.extensions.fileproviders.abstractions.8.0.0.nupkg.sha512",
     "/Users/anes/.nuget/packages/microsoft.extensions.hosting.abstractions/8.0.1/microsoft.extensions.hosting.abstractions.8.0.1.nupkg.sha512",
@@ -29,6 +31,15 @@
     "/Users/anes/.nuget/packages/microsoft.identitymodel.tokens/7.1.2/microsoft.identitymodel.tokens.7.1.2.nupkg.sha512",
     "/Users/anes/.nuget/packages/npgsql/8.0.3/npgsql.8.0.3.nupkg.sha512",
     "/Users/anes/.nuget/packages/npgsql.entityframeworkcore.postgresql/8.0.4/npgsql.entityframeworkcore.postgresql.8.0.4.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog/3.1.1/serilog.3.1.1.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog.aspnetcore/8.0.3/serilog.aspnetcore.8.0.3.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog.extensions.hosting/8.0.0/serilog.extensions.hosting.8.0.0.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog.extensions.logging/8.0.0/serilog.extensions.logging.8.0.0.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog.formatting.compact/2.0.0/serilog.formatting.compact.2.0.0.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog.settings.configuration/8.0.4/serilog.settings.configuration.8.0.4.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog.sinks.console/5.0.0/serilog.sinks.console.5.0.0.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog.sinks.debug/2.0.0/serilog.sinks.debug.2.0.0.nupkg.sha512",
+    "/Users/anes/.nuget/packages/serilog.sinks.file/5.0.0/serilog.sinks.file.5.0.0.nupkg.sha512",
     "/Users/anes/.nuget/packages/system.identitymodel.tokens.jwt/7.1.2/system.identitymodel.tokens.jwt.7.1.2.nupkg.sha512"
   ],
   "logs": []
