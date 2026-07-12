@@ -2,9 +2,9 @@ using System.Security.Claims;
 using CoreNode.Domain.DTOs;
 using CoreNode.Domain.Entities;
 using CoreNode.Domain.Enums;
+using CoreNode.Domain.Exceptions; // <-- N'oublie pas de créer ce dossier/namespace dans ton projet Domain
 using CoreNode.Domain.Interfaces;
 using CoreNode.Infrastructure.Data;
-using CoreNode.Infrastructure.Workers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,13 +31,22 @@ public class LxcController : ControllerBase
         [FromBody] CreateLxcRequest lxcRequest, 
         CancellationToken cancellationToken = default)
     {
-        // 1. On récupère le vrai utilisateur (la ligne que tu as créée dans DBeaver)
         var tenantId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         
-        // 2. MAPPING avec le vrai TenantId
+        // --- 🛑 RÈGLE BUSINESS : VÉRIFICATION DU QUOTA ---
+        var currentMachineCount = await _dbContext.VirtualMachines
+            .CountAsync(vm => vm.TenantId == tenantId, cancellationToken);
+
+        if (currentMachineCount >= 3)
+        {
+            // On jette l'exception métier. Le Middleware s'occupera de la transformer en Erreur 400.
+            throw new QuotaExceededException("Quota dépassé : Vous avez atteint la limite maximale de 3 machines virtuelles.");
+        }
+        // ------------------------------------------------
+        
         var vm = new VirtualMachine
         {
-            TenantId = tenantId, // <-- Le lien sécurisé avec la clé étrangère est ici
+            TenantId = tenantId,
             Hostname = lxcRequest.Hostname,
             MemoryMB = lxcRequest.MemoryMB,
             Status = VmStatus.Creating 
@@ -46,10 +55,8 @@ public class LxcController : ControllerBase
         _dbContext.VirtualMachines.Add(vm);
         await _dbContext.SaveChangesAsync(cancellationToken);
         
-        // 3. Appel à Proxmox (Mocké)
         var upid = await _proxmoxApiService.CreateLxcContainerAsync(lxcRequest, cancellationToken);
         
-        // 4. Suivi de la tâche
         var proxmoxTask = new ProxmoxTask
         {
             Upid = upid,
@@ -61,7 +68,6 @@ public class LxcController : ControllerBase
         _dbContext.Tasks.Add(proxmoxTask);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        // 5. La réponse
         return Ok(new { Message = "Création lancée avec succès", VmId = vm.Id, Upid = upid });
     }
 
@@ -70,10 +76,11 @@ public class LxcController : ControllerBase
     {
         var tenantId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        var myMachines = await _dbContext.VirtualMachines.Where(vm => vm.TenantId == tenantId).ToListAsync(cancellationToken);
+        var myMachines = await _dbContext.VirtualMachines
+            .Where(vm => vm.TenantId == tenantId)
+            .ToListAsync(cancellationToken);
         
         return Ok(myMachines);
-        
     }
 
     [HttpDelete("{id}")]
@@ -81,29 +88,29 @@ public class LxcController : ControllerBase
     {
         var tenantId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        var vm = await  _dbContext.VirtualMachines.FirstOrDefaultAsync(v=> v.Id == id,cancellationToken);
+        var vm = await _dbContext.VirtualMachines
+            .FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
 
-        if (vm == null || tenantId != vm.TenantId)
+        if (vm == null || vm.TenantId != tenantId)
         {
-            return Forbid();
-        }   
-        else
-        {
-            vm.Status = VmStatus.Deleting;
-            var upid = await _proxmoxApiService.DeleteLxcContainerAsync(vm.Id, cancellationToken);
-
-            var ProxmoxTask = new ProxmoxTask
-            {
-                Upid = upid,
-                VirtualMachineId = vm.Id,
-                Type = TaskType.Deletion,
-                Status = TaskStatus.InProgress
-            };
-            _dbContext.Tasks.Add(ProxmoxTask);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            
-            return Ok(new {Message = "Suppression lancée avec succès", VmId = vm.Id, Upid = upid });
+            return NotFound(); 
         }
-        
+
+        vm.Status = VmStatus.Deleting;
+
+        var upid = await _proxmoxApiService.DeleteLxcContainerAsync(id, cancellationToken);
+
+        var proxmoxTask = new ProxmoxTask
+        {
+            Upid = upid,
+            VirtualMachineId = vm.Id,
+            Type = TaskType.Deletion, 
+            Status = TaskStatus.InProgress
+        };
+
+        _dbContext.Tasks.Add(proxmoxTask);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return Ok(new { Message = "Suppression lancée avec succès", VmId = vm.Id, Upid = upid });
     }
 }

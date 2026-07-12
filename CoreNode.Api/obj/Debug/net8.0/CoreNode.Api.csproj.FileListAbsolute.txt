@@ -121,3 +121,12 @@
 /Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.AspNetCore.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.Extensions.Hosting.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.Extensions.Logging.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.Formatting.Compact.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.Settings.Configuration.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.Sinks.Console.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.Sinks.Debug.dll
+/Users/anes/Dev/CoreNode/CoreNode.Api/bin/Debug/net8.0/Serilog.Sinks.File.dll

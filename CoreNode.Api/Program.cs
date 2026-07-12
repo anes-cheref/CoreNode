@@ -36,9 +36,8 @@ try
     builder.Services.AddScoped<IProxmoxApiService, ProxmoxApiService>();
     builder.Services.AddHostedService<ProxmoxTaskWorker>();
 
-    // Authentification JWT
-    var secretKey = "MaSuperCleSecreteQuiDoitFaireAuMoins32CaracteresPourEtreValide!";
-    var keyBytes = Encoding.UTF8.GetBytes(secretKey);
+    
+    var keyBytes = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]);
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
@@ -84,6 +83,8 @@ try
         });
     });
 
+    builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+    
     // --- CONSTRUCTION DE L'APPLICATION ---
     var app = builder.Build();
 
